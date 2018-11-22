@@ -1,48 +1,31 @@
 package View;
 
+import Controller.FieldController;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseListener;
 
 public class FieldView extends JFrame {
 
-    private int fieldSize;
+    private CellView[][] cellViews;
 
-    CellView[][] field;
-    int rowCounter = 0;
-    int colCounter = 0;
+    public FieldView(int fieldSize, MouseListener listener) {
 
-    public FieldView(int fieldSize) {
-        this.fieldSize = fieldSize;
-        field = new CellView[this.fieldSize][this.fieldSize];
         setSize(500, 500);
         setMinimumSize(new Dimension(50, 50));
         setLocationRelativeTo(null);
-    }
 
-    public void addCellView(CellView cellView) {
-        this.field[colCounter][rowCounter] = cellView;
-        add(this.field[colCounter][rowCounter]);
-        colCounter++;
-        if (colCounter == fieldSize) {
-            colCounter = 0;
-            rowCounter++;
+        this.cellViews = new CellView[fieldSize][fieldSize];
+        for (int col = 0; col < fieldSize; col++) {
+            for (int row = 0; row < fieldSize; row++) {
+                cellViews[col][row] = new CellView(listener);
+                add(cellViews[col][row]);
+            }
         }
-    }
 
-    public void setGridLayout() {
-        GridLayout gridLayout = new GridLayout(this.fieldSize, this.fieldSize);
-        setLayout(gridLayout);
-    }
+        setLayout(new GridLayout(fieldSize, fieldSize));
 
-    public CellView[][] getField() {
-        return field;
-    }
-
-    public int getFieldSize() {
-        return fieldSize;
-    }
-
-    public void setFieldSize(int fieldSize) {
-        this.fieldSize = fieldSize;
+        setVisible(true);
     }
 }
