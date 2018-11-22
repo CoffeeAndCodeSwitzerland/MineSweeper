@@ -5,13 +5,30 @@ import Common.CellState;
 
 public class Cell {
 
-    private String id;
+    private int col;
+    private int row;
     private CellState state;
     private CellClickState clickState;
     private int bombNeighbors;
 
     public Cell() {
         setClickState(CellClickState.NOT_CLICKED);
+    }
+
+    public int getCol() {
+        return col;
+    }
+
+    public void setCol(int col) {
+        this.col = col;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
     }
 
     public CellState getState() {
@@ -28,14 +45,6 @@ public class Cell {
 
     public void setClickState(CellClickState clickState) {
         this.clickState = clickState;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public int getBombNeighbors() {
