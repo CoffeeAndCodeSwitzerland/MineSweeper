@@ -21,10 +21,13 @@ public class FieldController {
         view = new FieldView(this.fieldSize, new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                CellView sourceCell = (CellView) e.getSource();
                 if (SwingUtilities.isLeftMouseButton(e)) {
-                    reveal((CellView) e.getSource());
+                    if (!sourceCell.isProtected()) {
+                        reveal(sourceCell);
+                    }
                 } else {
-                    //PROTECTCELL
+                    sourceCell.protect();
                 }
             }
 
@@ -82,9 +85,13 @@ public class FieldController {
     }
 
     private void reveal(CellView sourceCell) {
-        sourceCell.reveal();
-        if (sourceCell.getBombNeighbors() == 0) {
-            fillNoBombNeighbors(sourceCell.getCol(), sourceCell.getRow());
+        if (sourceCell.getState() != CellState.BOMB) {
+            sourceCell.reveal();
+            if (sourceCell.getBombNeighbors() == 0) {
+                fillNoBombNeighbors(sourceCell.getCol(), sourceCell.getRow());
+            }
+        } else {
+            System.out.println("gameOver");
         }
     }
 
@@ -93,10 +100,10 @@ public class FieldController {
         for (int col = -1; col <= 1; col++) {
             for (int row = -1; row <= 1; row++) {
                 try {
-                    if (field[xPos+col][yPos+row].getState() != CellState.BOMB && field[xPos+col][yPos+row].getClickState() != CellClickState.CLICKED) {
+                    if (/*field[xPos+col][yPos+row].getState() != CellState.BOMB && */field[xPos+col][yPos+row].getClickState() != CellClickState.CLICKED) {
                         reveal(field[xPos+col][yPos+row]);
                     }
-                } catch (ArrayIndexOutOfBoundsException aioobex) {}
+                } catch (ArrayIndexOutOfBoundsException aoobex) {}
             }
         }
     }

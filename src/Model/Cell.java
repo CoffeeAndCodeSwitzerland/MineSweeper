@@ -11,6 +11,8 @@ public class Cell {
     private CellClickState clickState;
     private int bombNeighbors;
 
+    private boolean isProtected;
+
     public Cell() {
         setClickState(CellClickState.NOT_CLICKED);
     }
@@ -53,6 +55,14 @@ public class Cell {
 
     public void setBombNeighbors(int bombNeighbors) {
         this.bombNeighbors = bombNeighbors;
+    }
+
+    public boolean isProtected() {
+        return isProtected;
+    }
+
+    public void setProtected(boolean aProtected) {
+        isProtected = aProtected;
     }
 }
 

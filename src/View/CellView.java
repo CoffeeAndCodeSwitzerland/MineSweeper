@@ -36,6 +36,24 @@ public class CellView extends JButton {
         this.cell.setClickState(CellClickState.CLICKED);
     }
 
+    public void protect() {
+        this.cell.setProtected(!this.cell.isProtected());
+        System.out.println(this.cell.isProtected());
+        if (this.cell.isProtected()) {
+            setBackground(Color.orange);
+        } else {
+            if (this.getState() != CellState.BOMB) {
+                setBackground(Color.lightGray);
+            } else {
+                setBackground(Color.black);
+            }
+        }
+    }
+
+    public boolean isProtected() {
+        return this.cell.isProtected();
+    }
+
     public void setClickState(CellClickState state) {
         this.cell.setClickState(state);
     }
