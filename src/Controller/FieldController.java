@@ -2,6 +2,7 @@ package Controller;
 
 import Common.CellClickState;
 import Common.CellState;
+import Model.Game;
 import View.CellView;
 import View.FieldView;
 import View.GameOverUI;
@@ -11,12 +12,18 @@ import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.net.URISyntaxException;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 public class FieldController {
 
     private FieldView view;
+    private Game db;
 
     public FieldController(int fieldSize) {
+        db = new Game();
+        db.setStartDate(new Date());
+
         view = new FieldView(fieldSize, new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -124,7 +131,7 @@ public class FieldController {
         }
         if (success == Math.pow(field.length, 2)) {
             this.view.setVisible(false);
-            new SuccessUI();
+            new SuccessUI(db);
         }
     }
 }

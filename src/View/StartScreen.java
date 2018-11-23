@@ -34,6 +34,7 @@ public class StartScreen extends JFrame {
                 }
                 setFieldSize(Integer.parseInt(textField.getText()));
                 new FieldController(getFieldSize());
+
                 this.setVisible(false);
             } catch (Exception ex) {
                 textField.setText("");
