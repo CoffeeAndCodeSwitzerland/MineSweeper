@@ -1,10 +1,13 @@
 
 package Controller;
 
+import Common.CellClickState;
 import Common.CellState;
 import View.CellView;
 import View.FieldView;
 
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -18,7 +21,11 @@ public class FieldController {
         view = new FieldView(this.fieldSize, new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                reveal((CellView) e.getSource());
+                if (SwingUtilities.isLeftMouseButton(e)) {
+                    reveal((CellView) e.getSource());
+                } else {
+                    //PROTECTCELL
+                }
             }
 
             @Override
@@ -44,50 +51,52 @@ public class FieldController {
         setNeighbors();
     }
 
-    public void setNeighbors() {
-        int bombCounter = 0;
+    private void setNeighbors() {
         CellView[][] field = view.getCellViews();
-        //FOREACH CELL
+        int bombCounter = 0;
+        //FOR EVERY CELL
         for (int col = 0; col < field.length; col++) {
             for (int row = 0; row < field.length; row++) {
-                //FOREACH CELL IN 9 FIELD
-                for (int x = -1; x < 1; x++) {
-                    for (int y = -1; y < 1; y++) {
-                        if (field[col+x][row+y].getState() == CellState.BOMB) {
-                            bombCounter++;
+                //CHECK FIELD OF 9
+                for (int i = -1; i <= 1; i++) {
+                    for (int j = -1; j <= 1; j++) {
+                        try {
+                            if (i == 0 && j == 0) {}
+                            else if (field[col + i][row + j].getState() == CellState.BOMB) {
+                                bombCounter++;
+                            }
+                        } catch (ArrayIndexOutOfBoundsException aoobex) {
                         }
                     }
                 }
-                //
+                //END CHECK FIELD OF 9
                 if (field[col][row].getState() != CellState.BOMB) {
                     field[col][row].setBombNeighbors(bombCounter);
-                    //----------------------------------
-                    field[col][row].setText(String.valueOf(bombCounter));
-                    //----------------------------------
+                } else {
+                    field[col][row].setBackground(Color.black);
                 }
                 bombCounter = 0;
             }
         }
-        //
+        //END FIELD
     }
 
-    public void reveal(CellView sourceCell) {
+    private void reveal(CellView sourceCell) {
+        sourceCell.reveal();
+        if (sourceCell.getBombNeighbors() == 0) {
+            fillNoBombNeighbors(sourceCell.getCol(), sourceCell.getRow());
+        }
+    }
+
+    private void fillNoBombNeighbors(int xPos, int yPos) {
         CellView[][] field = view.getCellViews();
-        if (sourceCell.getBombNeighbors() != 0) {
-            //show number
-        } else {
-            //FILL
-        }
-
-
-        for (int col = -1; col < 1; col++) {
-            for (int row = -1; row < 1; row++) {
-
-            }
-        }
-        for (int col = 0; col < field.length; col++) {
-            for (int row = 0; row < field.length; row++) {
-
+        for (int col = -1; col <= 1; col++) {
+            for (int row = -1; row <= 1; row++) {
+                try {
+                    if (field[xPos+col][yPos+row].getState() != CellState.BOMB && field[xPos+col][yPos+row].getClickState() != CellClickState.CLICKED) {
+                        reveal(field[xPos+col][yPos+row]);
+                    }
+                } catch (ArrayIndexOutOfBoundsException aioobex) {}
             }
         }
     }
