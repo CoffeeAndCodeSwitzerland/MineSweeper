@@ -7,6 +7,7 @@ import Model.Cell;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 
 public class CellView extends JButton {
 
@@ -36,12 +37,10 @@ public class CellView extends JButton {
     public void protect() {
         this.setProtected(!this.isProtected());
         if (this.isProtected()) {
-            setBackground(Color.orange);
+            setBackground(Color.red);
         } else {
             if (this.getState() != CellState.BOMB) {
                 setBackground(Color.lightGray);
-            } else {
-                setBackground(Color.black);
             }
         }
     }

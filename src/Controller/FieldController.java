@@ -4,11 +4,13 @@ import Common.CellClickState;
 import Common.CellState;
 import View.CellView;
 import View.FieldView;
+import View.GameOverUI;
+import View.SuccessUI;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.net.URISyntaxException;
 
 public class FieldController {
 
@@ -21,13 +23,18 @@ public class FieldController {
                 CellView sourceCell = (CellView) e.getSource();
                 if (SwingUtilities.isLeftMouseButton(e)) {
                     if (!sourceCell.isProtected()) {
-                        reveal(sourceCell);
+                        try {
+                            reveal(sourceCell);
+                        } catch (URISyntaxException e1) {
+                            e1.printStackTrace();
+                        }
                     }
                 } else {
                     if (sourceCell.getClickState() != CellClickState.CLICKED) {
                         sourceCell.protect();
                     }
                 }
+                checkGameState();
             }
             @Override
             public void mousePressed(MouseEvent e) {
@@ -69,8 +76,6 @@ public class FieldController {
                 //end check field of 9
                 if (field[col][row].getState() != CellState.BOMB) {
                     field[col][row].setBombNeighbors(bombCounter);
-                } else {
-                    field[col][row].setBackground(Color.black);
                 }
                 bombCounter = 0;
             }
@@ -78,13 +83,15 @@ public class FieldController {
         //end field
     }
 
-    private void reveal(CellView sourceCell) {
+    private void reveal(CellView sourceCell) throws URISyntaxException {
         if (sourceCell.getState() != CellState.BOMB) {
             sourceCell.reveal();
             if (sourceCell.getBombNeighbors() == 0) {
                 fillNoBombNeighbors(sourceCell.getCol(), sourceCell.getRow());
             }
         } else {
+            view.setVisible(false);
+            new GameOverUI();
             System.out.println("gameOver");
         }
     }
@@ -97,8 +104,27 @@ public class FieldController {
                     if (field[xPos+col][yPos+row].getClickState() != CellClickState.CLICKED) {
                         reveal(field[xPos+col][yPos+row]);
                     }
-                } catch (ArrayIndexOutOfBoundsException ignored) {}
+                } catch (ArrayIndexOutOfBoundsException ignored) {} catch (URISyntaxException e) {
+                    //sum expl0sion ät se end ^^
+                    e.printStackTrace();
+                }
             }
+        }
+    }
+
+    private void checkGameState() {
+        double success = 0;
+        CellView[][] field = view.getCellViews();
+        for (int col = 0; col < field.length; col++) {
+            for (int row = 0; row < field.length; row++) {
+                if (field[col][row].getClickState() == CellClickState.CLICKED || field[col][row].getState() == CellState.BOMB) {
+                    success++;
+                } else return;
+            }
+        }
+        if (success == Math.pow(field.length, 2)) {
+            this.view.setVisible(false);
+            new SuccessUI();
         }
     }
 }

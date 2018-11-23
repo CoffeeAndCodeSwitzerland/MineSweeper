@@ -8,9 +8,6 @@ import java.util.Random;
 public class FieldView extends JFrame {
 
     private CellView[][] cellViews;
-    private Random rnd;
-    private double randomState;
-    private double bombPercentage = 15;
 
     public FieldView(int fieldSize, MouseListener listener) {
 
@@ -21,9 +18,10 @@ public class FieldView extends JFrame {
         this.cellViews = new CellView[fieldSize][fieldSize];
         for (int col = 0; col < fieldSize; col++) {
             for (int row = 0; row < fieldSize; row++) {
-                rnd = new Random();
-                this.randomState = rnd.nextDouble()*100;
-                cellViews[col][row] = new CellView(listener, col, row, this.randomState, this.bombPercentage);
+                Random rnd = new Random();
+                double randomState = rnd.nextDouble() * 100;
+                double bombPercentage = 15;
+                cellViews[col][row] = new CellView(listener, col, row, randomState, bombPercentage);
                 add(cellViews[col][row]);
             }
         }

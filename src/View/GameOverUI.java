@@ -1,17 +1,79 @@
 package View;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class GameOverUI extends JFrame {
-    private StartScreen startScreen;
 
-    public GameOverUI() {
+    public GameOverUI () throws URISyntaxException {
 
-        setSize(100, 100);
-
-        JLabel label = new JLabel("GameOver");
-        add(label);
-
+        final URI uri = new URI("https://youtu.be/eF-fyn-WfIs?t=55");
+        class OpenUrlAction implements ActionListener {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                open(uri);
+                System.exit(0);
+            }
+        }
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(300, 300);
+        setLocationRelativeTo(null);
+        Container container = getContentPane();
+        container.setLayout(new GridBagLayout());
+        JButton button = new JButton();
+        button.setText("<HTML><FONT color=\"#FF0000\"><U>GAMEOVER (click)</U></FONT>");
+        button.setHorizontalAlignment(SwingConstants.LEFT);
+        button.setBorderPainted(false);
+        button.setOpaque(false);
+        button.setBackground(Color.WHITE);
+        button.setToolTipText(uri.toString());
+        button.addActionListener(new OpenUrlAction());
+        container.add(button);
         setVisible(true);
     }
+    private static void open(URI uri)
+    {
+        if (Desktop.isDesktopSupported())
+        {
+            try
+            {
+                Desktop.getDesktop().browse(uri);
+            }
+            catch (IOException e)
+            { /* TODO: error handling */ }
+        }
+        else
+        { /* TODO: error handling */ }
+    }
 }
+
+//
+//import javafx.scene.web.WebView;
+//
+//import javax.swing.*;
+//import java.awt.*;
+//
+//public class GameOverUI extends JFrame {
+//    public GameOverUI() {
+//        setSize(300, 300);
+//        setResizable(false);
+//        setLayout(new GridLayout());
+//        setLocationRelativeTo(null);
+//
+//        JLabel label = new JLabel("GameOver", SwingConstants.CENTER);
+//        add(label);
+//
+//        WebView view = new WebView();
+//        view.getEngine().load(
+//                "https://youtu.be/qDMUekfOR-E"
+//        );
+//        view.setPrefSize(300, 300);
+//
+//        setVisible(true);
+//    }
+//}
