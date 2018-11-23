@@ -37,8 +37,4 @@ public class FieldView extends JFrame {
         return cellViews;
     }
 
-    public void setCellViews(CellView[][] cellViews) {
-        this.cellViews = cellViews;
-    }
-
 }

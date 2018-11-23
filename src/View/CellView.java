@@ -1,7 +1,3 @@
-/*
- * Copyright (c) 2018. School project
- */
-
 package View;
 
 import Common.CellClickState;
@@ -16,30 +12,30 @@ public class CellView extends JButton {
 
     private Cell cell;
 
-    public CellView(MouseListener listener, int col, int row, double rndNumber, double bombPercentage) {
-        cell = new Cell();
-        cell.setCol(col);
-        cell.setRow(row);
+    CellView(MouseListener listener, int col, int row, double rndNumber, double bombPercentage) {
+        setBackground(Color.lightGray);
+        this.cell = new Cell();
+        this.setCol(col);
+        this.setRow(row);
         if (rndNumber <= bombPercentage) {
-            this.cell.setState(CellState.BOMB);
+            this.setState(CellState.BOMB);
         } else {
-            this.cell.setState(CellState.DEFAULT);
+            this.setState(CellState.DEFAULT);
         }
         addMouseListener(listener);
     }
 
     public void reveal() {
         setBackground(Color.gray);
-        if (this.cell.getBombNeighbors() != 0) {
-            setText(String.valueOf(this.cell.getBombNeighbors()));
+        if (this.getBombNeighbors() != 0) {
+            setText(String.valueOf(this.getBombNeighbors()));
         }
-        this.cell.setClickState(CellClickState.CLICKED);
+        this.setClickState(CellClickState.CLICKED);
     }
 
     public void protect() {
-        this.cell.setProtected(!this.cell.isProtected());
-        System.out.println(this.cell.isProtected());
-        if (this.cell.isProtected()) {
+        this.setProtected(!this.isProtected());
+        if (this.isProtected()) {
             setBackground(Color.orange);
         } else {
             if (this.getState() != CellState.BOMB) {
@@ -54,16 +50,24 @@ public class CellView extends JButton {
         return this.cell.isProtected();
     }
 
-    public void setClickState(CellClickState state) {
-        this.cell.setClickState(state);
+    public void setProtected(boolean isProtected) {
+        this.cell.setProtected(isProtected);
     }
 
     public int getCol() {
         return this.cell.getCol();
     }
 
+    public void setCol(int col) {
+        this.cell.setCol(col);
+    }
+
     public int getRow() {
         return this.cell.getRow();
+    }
+
+    public void setRow(int row) {
+        this.cell.setRow(row);
     }
 
     public int getBombNeighbors() {
@@ -74,8 +78,16 @@ public class CellView extends JButton {
         return this.cell.getState();
     }
 
+    public void setState(CellState state) {
+        this.cell.setState(state);
+    }
+
     public CellClickState getClickState() {
         return this.cell.getClickState();
+    }
+
+    public void setClickState(CellClickState clickState) {
+        this.cell.setClickState(clickState);
     }
 
     public void setBombNeighbors(int bombNeighbors) {

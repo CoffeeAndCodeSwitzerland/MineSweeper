@@ -10,7 +10,6 @@ public class Cell {
     private CellState state;
     private CellClickState clickState;
     private int bombNeighbors;
-
     private boolean isProtected;
 
     public Cell() {
