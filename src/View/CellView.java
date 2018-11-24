@@ -39,9 +39,7 @@ public class CellView extends JButton {
         if (this.isProtected()) {
             setBackground(Color.red);
         } else {
-            if (this.getState() != CellState.BOMB) {
-                setBackground(Color.lightGray);
-            }
+            setBackground(Color.lightGray);
         }
     }
 
