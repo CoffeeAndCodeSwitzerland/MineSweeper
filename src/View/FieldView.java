@@ -14,6 +14,7 @@ public class FieldView extends JFrame {
         setSize(500, 500);
         setMinimumSize(new Dimension(50, 50));
         setLocationRelativeTo(null);
+        setTitle("Minesweeper");
 
         this.cellViews = new CellView[fieldSize][fieldSize];
         for (int col = 0; col < fieldSize; col++) {

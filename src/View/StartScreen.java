@@ -15,6 +15,7 @@ public class StartScreen extends JFrame {
         setSize(600, 500);
         setResizable(false);
         setLocationRelativeTo(null);
+        setTitle("Willkommen zu Minesweeper");
 
         JLabel label = new JLabel("Willkommen zu Minesweeper! \nLinksklick zum Aufdecken, Rechtsklick zum Schützen einer Zelle", SwingConstants.CENTER);
         add(label);

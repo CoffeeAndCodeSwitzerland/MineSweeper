@@ -2,6 +2,7 @@ package Controller;
 
 import Common.CellClickState;
 import Common.CellState;
+import Model.Database;
 import Model.Game;
 import View.CellView;
 import View.FieldView;
@@ -12,17 +13,21 @@ import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.net.URISyntaxException;
-import java.time.LocalDateTime;
+import java.sql.SQLException;
 import java.util.Date;
 
 public class FieldController {
+    Database db = new Database();
 
     private FieldView view;
-    private Game db;
+    private Game game;
 
     public FieldController(int fieldSize) {
-        db = new Game();
-        db.setStartDate(new Date());
+        db.connect();
+        db.createTable();
+
+        game = new Game();
+        game.setStartDate(new Date());
 
         view = new FieldView(fieldSize, new MouseListener() {
             @Override
@@ -41,7 +46,11 @@ public class FieldController {
                         sourceCell.protect();
                     }
                 }
-                checkGameState();
+                try {
+                    checkGameState();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
             }
             @Override
             public void mousePressed(MouseEvent e) {
@@ -99,7 +108,6 @@ public class FieldController {
         } else {
             view.setVisible(false);
             new GameOverUI();
-            System.out.println("gameOver");
         }
     }
 
@@ -119,7 +127,7 @@ public class FieldController {
         }
     }
 
-    private void checkGameState() {
+    private void checkGameState() throws SQLException {
         double success = 0;
         CellView[][] field = view.getCellViews();
         for (int col = 0; col < field.length; col++) {
@@ -131,7 +139,7 @@ public class FieldController {
         }
         if (success == Math.pow(field.length, 2)) {
             this.view.setVisible(false);
-            new SuccessUI(db);
+            new SuccessUI(this.game, this.db, this.view.getCellViews().length);
         }
     }
 }
