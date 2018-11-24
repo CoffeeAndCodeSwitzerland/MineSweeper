@@ -4,6 +4,8 @@ import Controller.FieldController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.*;
+import java.nio.Buffer;
 import java.text.NumberFormat;
 
 public class StartScreen extends JFrame {
@@ -11,6 +13,13 @@ public class StartScreen extends JFrame {
     private int fieldSize;
 
     public StartScreen() {
+        JOptionPane.showMessageDialog(null,
+                "WILLKOMMEN ZU MINESWEEPER\n" +
+                "\n" +
+                "- Um die vorhandenen \"Rekorddaten\" zu löschen, gehen Sie ins Verzeichnis 'C:\\Users\\ihrbenutzer\\' " +
+                "\nund löschen dort die Datei \"Minesweeper.db\"\n\n" +
+                "(ACHTUNG: kann nicht rückgängig gemacht werden!)\n");
+
         setLayout(new GridLayout(3, 1));
         setSize(600, 500);
         setResizable(false);

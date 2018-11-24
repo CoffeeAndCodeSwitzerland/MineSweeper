@@ -4,6 +4,8 @@
 
 import View.StartScreen;
 
+import java.io.FileNotFoundException;
+
 public class MineSweeper {
 
     /**
@@ -12,11 +14,11 @@ public class MineSweeper {
      * classic minesweeper (school project)
      */
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         new MineSweeper();
     }
 
-    private MineSweeper() {
+    private MineSweeper() throws FileNotFoundException {
         new StartScreen();
     }
 }
