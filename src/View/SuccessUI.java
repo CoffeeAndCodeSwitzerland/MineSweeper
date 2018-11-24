@@ -12,7 +12,7 @@ import java.util.Date;
 public class SuccessUI extends JFrame {
     private Database db;
     private Game game;
-    public SuccessUI(Game game, Database db, int fieldSize) {
+    public SuccessUI(Game game, Database db, int fieldSize) throws SQLException {
         this.db = db;
         this.game = game;
         game.setEndDate(new Date());
@@ -41,6 +41,8 @@ public class SuccessUI extends JFrame {
             bestScore.setText("Die beste Zeit mit deinen Spieldaten beträgt: " + rs.getString("winningtime") + " Sekunden (benutzer: " + rs.getString("username") + ")");
         } catch (SQLException sql) {
             bestScore.setText("Noch keine Daten gefunden...");
+        } finally {
+            rs.close();
         }
         add(bestScore);
 
@@ -50,11 +52,23 @@ public class SuccessUI extends JFrame {
             submit.addActionListener(e -> {
                 if (!username.getText().equals("") && !username.getText().startsWith(" ")) {
                     db.insert(username.getText(), String.valueOf((this.game.getEndDate().getTime() - this.game.getStartDate().getTime()) / 1000), fieldSize);
+                    JOptionPane.showMessageDialog(null, "Daten erfolgreich in Datenbank insertiert!");
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
                     setVisible(false);
+                    try {
+                        db.disconnect();
+                    } catch (SQLException e1) {
+                        e1.printStackTrace();
+                    }
                     System.exit(0);
                 }
             });
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Etwas ist scheifgelaufen!");
             e.printStackTrace();
         }
 

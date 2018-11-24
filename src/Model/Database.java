@@ -32,6 +32,10 @@ public class Database {
         }
     }
 
+    public void disconnect() throws SQLException {
+        DriverManager.getConnection(url).close();
+    }
+
     public void createTable() {
 
         String tableCreation = "Create table if not exists Minesweeper ( \n"

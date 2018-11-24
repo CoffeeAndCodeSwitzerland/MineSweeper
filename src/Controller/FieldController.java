@@ -17,7 +17,7 @@ import java.sql.SQLException;
 import java.util.Date;
 
 public class FieldController {
-    private Database db = new Database();
+    Database db = new Database();
 
     private FieldView view;
     private Game game;
