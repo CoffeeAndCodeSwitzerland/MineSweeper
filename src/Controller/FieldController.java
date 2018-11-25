@@ -132,7 +132,7 @@ public class FieldController {
         CellView[][] field = view.getCellViews();
         for (int col = 0; col < field.length; col++) {
             for (int row = 0; row < field.length; row++) {
-                if (field[col][row].getClickState() == CellClickState.CLICKED || field[col][row].getState() == CellState.BOMB) {
+                if (field[col][row].getClickState() == CellClickState.CLICKED || field[col][row].getState() == CellState.BOMB && field[col][row].isProtected()) {
                     success++;
                 } else return;
             }

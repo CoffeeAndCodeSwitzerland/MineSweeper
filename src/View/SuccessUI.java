@@ -36,7 +36,7 @@ public class SuccessUI extends JFrame {
 
 
         JLabel bestScore = new JLabel();
-        ResultSet rs = db.select("Select distinct username, winningtime from Minesweeper where fieldsize = " + fieldSize + " order by winningtime asc;");
+        ResultSet rs = db.select("Select distinct username, winningtime from Minesweeper where fieldsize = "+ fieldSize +" group by winningtime order by winningtime asc;");
         try {
             bestScore.setText("Die beste Zeit mit deinen Spieldaten beträgt: " + rs.getString("winningtime") + " Sekunden (benutzer: " + rs.getString("username") + ")");
         } catch (SQLException sql) {
