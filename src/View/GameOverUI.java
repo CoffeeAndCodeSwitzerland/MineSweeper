@@ -36,44 +36,17 @@ public class GameOverUI extends JFrame {
         container.add(button);
         setVisible(true);
     }
-    private static void open(URI uri)
-    {
+
+    private static void open(URI uri) {
         if (Desktop.isDesktopSupported())
         {
             try
             {
                 Desktop.getDesktop().browse(uri);
             }
-            catch (IOException e)
-            { /* TODO: error handling */ }
+            catch (IOException ignored){}
+        } else {
+            System.exit(0);
         }
-        else
-        { /* TODO: error handling */ }
     }
 }
-
-//
-//import javafx.scene.web.WebView;
-//
-//import javax.swing.*;
-//import java.awt.*;
-//
-//public class GameOverUI extends JFrame {
-//    public GameOverUI() {
-//        setSize(300, 300);
-//        setResizable(false);
-//        setLayout(new GridLayout());
-//        setLocationRelativeTo(null);
-//
-//        JLabel label = new JLabel("GameOver", SwingConstants.CENTER);
-//        add(label);
-//
-//        WebView view = new WebView();
-//        view.getEngine().load(
-//                "https://youtu.be/qDMUekfOR-E"
-//        );
-//        view.setPrefSize(300, 300);
-//
-//        setVisible(true);
-//    }
-//}

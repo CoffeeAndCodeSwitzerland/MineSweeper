@@ -9,8 +9,9 @@ import java.sql.*;
 
 public class Database {
 
-    private String url = "jdbc:sqlite:"+System.getenv("homepath")+"/Minesweeper.db";
+//    private String url = "jdbc:sqlite:"+System.getenv("homepath")+"/Minesweeper.db";
 
+    private String url = "jdbc:sqlite:C:\\Users\\vmadmin\\Minesweeper.db";
 
     public void connect() {
         Connection connection = null;

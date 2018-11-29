@@ -17,7 +17,7 @@ import java.sql.SQLException;
 import java.util.Date;
 
 public class FieldController {
-    Database db = new Database();
+    private Database db = new Database();
 
     private FieldView view;
     private Game game;
@@ -120,7 +120,6 @@ public class FieldController {
                         reveal(field[xPos+col][yPos+row]);
                     }
                 } catch (ArrayIndexOutOfBoundsException ignored) {} catch (URISyntaxException e) {
-                    //sum expl0sion ät se end ^^
                     e.printStackTrace();
                 }
             }

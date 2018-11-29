@@ -21,7 +21,7 @@ public class FieldView extends JFrame {
             for (int row = 0; row < fieldSize; row++) {
                 Random rnd = new Random();
                 double randomState = rnd.nextDouble() * 100;
-                double bombPercentage = 15;
+                double bombPercentage = 10;
                 cellViews[col][row] = new CellView(listener, col, row, randomState, bombPercentage);
                 add(cellViews[col][row]);
             }
