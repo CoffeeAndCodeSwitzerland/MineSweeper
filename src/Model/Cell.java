@@ -60,8 +60,8 @@ public class Cell {
         return isProtected;
     }
 
-    public void setProtected(boolean aProtected) {
-        isProtected = aProtected;
+    public void setProtected(boolean protect) {
+        isProtected = protect;
     }
 }
 

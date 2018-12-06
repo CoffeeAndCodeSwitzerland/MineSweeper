@@ -2,7 +2,7 @@
  * Copyright (c) 2018. School project
  */
 
-import View.StartScreen;
+package MineSweeper;import View.StartScreen;
 
 import java.io.FileNotFoundException;
 
@@ -18,7 +18,7 @@ public class MineSweeper {
         new MineSweeper();
     }
 
-    private MineSweeper() throws FileNotFoundException {
-        new StartScreen();
+    public MineSweeper() throws FileNotFoundException {
+        new StartScreen(true);
     }
 }

@@ -1,18 +1,17 @@
 package Model;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Game {
     private Date startDate;
     private Date endDate;
 
-    public Date getStartDate() {
-        return startDate;
+    public Game(Date startDate) {
+        this.startDate = startDate;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+    public Date getStartDate() {
+        return startDate;
     }
 
     public Date getEndDate() {

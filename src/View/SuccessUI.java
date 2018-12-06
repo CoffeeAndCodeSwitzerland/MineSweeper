@@ -10,10 +10,9 @@ import java.sql.SQLException;
 import java.util.Date;
 
 public class SuccessUI extends JFrame {
-    private Database db;
     private Game game;
     public SuccessUI(Game game, Database db, int fieldSize) throws SQLException {
-        this.db = db;
+        Database db1 = db;
         this.game = game;
         game.setEndDate(new Date());
 
@@ -21,11 +20,10 @@ public class SuccessUI extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new GridLayout(5, 1));
 
-//        JLabel label = new JLabel("Du hast das Spiel in " + (db.getEndDate().getSecond() - db.getStartDate().getSecond()) + " Sekunden gemeistert!!!");
-        JLabel label = new JLabel("Du hast das Spiel in " + ((this.game.getEndDate().getTime() - this.game.getStartDate().getTime()) / 1000) + " Sekunden gemeistert!!!");  //TODO: TIME
+        JLabel label = new JLabel("Du hast das Spiel in " + ((this.game.getEndDate().getTime() - this.game.getStartDate().getTime()) / 1000) + " Sekunden gemeistert!!!");
         add(label);
 
-        JLabel uname = new JLabel("Wie ist dein Name?: ");  //TODO: TIME
+        JLabel uname = new JLabel("Wie ist dein Name?: ");
         add(uname);
 
         JTextField username = new JTextField();

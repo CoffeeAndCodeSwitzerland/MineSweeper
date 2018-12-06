@@ -16,18 +16,25 @@ import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.Date;
 
+/**
+ * Class FieldController
+ * Controls the interaction with the fields members (cells)
+ */
 public class FieldController {
+    //database to save time high score
     private Database db = new Database();
 
     private FieldView view;
+
+    //class to save playing time
     private Game game;
 
     public FieldController(int fieldSize) {
+        //connect to database
         db.connect();
         db.createTable();
 
-        game = new Game();
-        game.setStartDate(new Date());
+        game = new Game(new Date());
 
         view = new FieldView(fieldSize, new MouseListener() {
             @Override
@@ -36,6 +43,7 @@ public class FieldController {
                 if (SwingUtilities.isLeftMouseButton(e)) {
                     if (!sourceCell.isProtected()) {
                         try {
+                            //reveal cells (from source cell)
                             reveal(sourceCell);
                         } catch (Exception ex) {
                             ex.printStackTrace();
@@ -69,6 +77,8 @@ public class FieldController {
 
             }
         });
+
+        //set the neighbors of each bomb
         setNeighbors();
     }
 
@@ -99,7 +109,7 @@ public class FieldController {
         //end field
     }
 
-    private void reveal(CellView sourceCell) throws URISyntaxException {
+    private void reveal(CellView sourceCell) {
         if (sourceCell.getState() != CellState.BOMB) {
             sourceCell.reveal();
             if (sourceCell.getBombNeighbors() == 0) {
@@ -119,9 +129,7 @@ public class FieldController {
                     if (field[xPos+col][yPos+row].getClickState() != CellClickState.CLICKED) {
                         reveal(field[xPos+col][yPos+row]);
                     }
-                } catch (ArrayIndexOutOfBoundsException ignored) {} catch (URISyntaxException e) {
-                    e.printStackTrace();
-                }
+                } catch (ArrayIndexOutOfBoundsException ignored) {}
             }
         }
     }

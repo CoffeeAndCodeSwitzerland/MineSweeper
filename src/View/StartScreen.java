@@ -4,21 +4,21 @@ import Controller.FieldController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.*;
-import java.nio.Buffer;
-import java.text.NumberFormat;
 
 public class StartScreen extends JFrame {
 
-    private int fieldSize;
+    private boolean firstStart;
 
-    public StartScreen() {
-        JOptionPane.showMessageDialog(null,
-                "WILLKOMMEN ZU MINESWEEPER\n" +
-                "\n" +
-                "- Um die vorhandenen \"Rekorddaten\" zu löschen, gehen Sie ins Verzeichnis 'C:\\Users\\ihrbenutzer\\' " +
-                "\nund löschen dort die Datei \"Minesweeper.db\"\n\n" +
-                "(ACHTUNG: kann nicht rückgängig gemacht werden!)\n");
+    public StartScreen(boolean isFirstStart) {
+        setFirstStart(isFirstStart);
+        if (isFirstStart()) {
+            JOptionPane.showMessageDialog(null,
+                    "WILLKOMMEN ZU MINESWEEPER\n" +
+                            "\n" +
+                            "- Um die vorhandenen \"Rekorddaten\" zu löschen, gehen Sie ins Verzeichnis 'C:\\Users\\ihrbenutzer\\' " +
+                            "\nund löschen dort die Datei \"Minesweeper.db\"\n\n" +
+                            "(ACHTUNG: kann nicht rückgängig gemacht werden!)\n");
+        }
 
         setLayout(new GridLayout(3, 1));
         setSize(600, 500);
@@ -29,39 +29,35 @@ public class StartScreen extends JFrame {
         JLabel label = new JLabel("Willkommen zu Minesweeper! \nLinksklick zum Aufdecken, Rechtsklick zum Schützen einer Zelle", SwingConstants.CENTER);
         add(label);
 
-        JFormattedTextField textField = new JFormattedTextField(NumberFormat.getNumberInstance());
+        JTextField textField = new JTextField("Hier Feldgrösse eingeben");
         textField.setSize(new Dimension(50, 50));
-        textField.setValue(10d);
         textField.setColumns(10);
         add(textField);
 
         JButton button = new JButton("Zum Spiel");
-        add(button);
         button.addActionListener(e -> {
             try {
                 if (Integer.parseInt(textField.getText()) < 3 || Integer.parseInt(textField.getText()) > 200) {
                     throw new Exception();
                 }
-                setFieldSize(Integer.parseInt(textField.getText()));
-                new FieldController(getFieldSize());
-
+                new FieldController(Integer.parseInt(textField.getText()));
                 this.setVisible(false);
             } catch (Exception ex) {
-                textField.setText("");
-                JOptionPane.showMessageDialog(null, "Schlingel du! Max=200, Min=3 (setze Werte zurück..)");
+                JOptionPane.showMessageDialog(null, "Ein Fehler ist aufgetreten! (Maximum Grösse = 200, Minimum Grösse =3) setze Werte zurück...");
                 textField.setText("");
             }
         });
+        add(button);
 
         setVisible(true);
     }
 
-    public int getFieldSize() {
-        return fieldSize;
+    public boolean isFirstStart() {
+        return firstStart;
     }
 
-    public void setFieldSize(int fieldSize) {
-        this.fieldSize = fieldSize;
+    public void setFirstStart(boolean firstStart) {
+        this.firstStart = firstStart;
     }
 
 }
