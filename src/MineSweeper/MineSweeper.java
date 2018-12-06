@@ -14,11 +14,11 @@ public class MineSweeper {
      * classic minesweeper (school project)
      */
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) {
         new MineSweeper();
     }
 
-    public MineSweeper() throws FileNotFoundException {
+    public MineSweeper() {
         new StartScreen(true);
     }
 }
