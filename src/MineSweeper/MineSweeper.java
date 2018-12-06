@@ -18,7 +18,7 @@ public class MineSweeper {
         new MineSweeper();
     }
 
-    public MineSweeper() {
+    private MineSweeper() {
         new StartScreen(true);
     }
 }

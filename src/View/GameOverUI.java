@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class GameOverUI extends JFrame {
     public GameOverUI () {
-        setLayout(new GridLayout(3,1));
+        setLayout(new GridLayout(2,1));
 
         setSize(300, 300);
         setResizable(false);

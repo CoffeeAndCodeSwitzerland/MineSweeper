@@ -7,7 +7,6 @@ import Model.Cell;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseListener;
-import java.io.IOException;
 
 public class CellView extends JButton {
 

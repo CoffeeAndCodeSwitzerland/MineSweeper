@@ -12,7 +12,6 @@ import View.SuccessUI;
 import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.Date;
 
@@ -121,6 +120,11 @@ public class FieldController {
         }
     }
 
+    /**
+     * fills the neighbors with no bombs in their "9 field" recursively
+     * @param xPos
+     * @param yPos
+     */
     private void fillNoBombNeighbors(int xPos, int yPos) {
         CellView[][] field = view.getCellViews();
         for (int col = -1; col <= 1; col++) {
@@ -139,6 +143,7 @@ public class FieldController {
         CellView[][] field = view.getCellViews();
         for (int col = 0; col < field.length; col++) {
             for (int row = 0; row < field.length; row++) {
+                //check if each field is either click or it's a bomb and it's protected
                 if (field[col][row].getClickState() == CellClickState.CLICKED || field[col][row].getState() == CellState.BOMB && field[col][row].isProtected()) {
                     success++;
                 } else return;

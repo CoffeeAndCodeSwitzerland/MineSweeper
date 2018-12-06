@@ -12,7 +12,6 @@ import java.util.Date;
 public class SuccessUI extends JFrame {
     private Game game;
     public SuccessUI(Game game, Database db, int fieldSize) throws SQLException {
-        Database db1 = db;
         this.game = game;
         game.setEndDate(new Date());
 
