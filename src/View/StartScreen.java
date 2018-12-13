@@ -11,6 +11,7 @@ public class StartScreen extends JFrame {
 
     public StartScreen(boolean isFirstStart) {
         setFirstStart(isFirstStart);
+        //on first start show message where to delete the db
         if (isFirstStart()) {
             JOptionPane.showMessageDialog(null,
                     "WILLKOMMEN ZU MINESWEEPER\n" +

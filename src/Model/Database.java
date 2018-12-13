@@ -4,7 +4,6 @@ import java.sql.*;
 
 /**
  * class Database | connect to database, create tables, insert....
- * @author Cédric Schweizer
  */
 
 public class Database {
@@ -40,7 +39,7 @@ public class Database {
         String tableCreation = "Create table if not exists Minesweeper ( \n"
                 + "id integer primary key autoincrement,\n"
                 + "username nvarchar(200),\n"
-                + "winningtime nvarchar,\n" //TODO: could be timestamp
+                + "winningtime nvarchar,\n"
                 + "fieldsize integer\n"
                 + ");";
 

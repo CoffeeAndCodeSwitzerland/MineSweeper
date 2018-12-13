@@ -5,8 +5,12 @@ import java.awt.*;
 import java.awt.event.MouseListener;
 import java.util.Random;
 
+/**
+ * field view
+ */
 public class FieldView extends JFrame {
 
+    // the field (array of cellviews)
     private CellView[][] cellViews;
 
     public FieldView(int fieldSize, MouseListener listener) {

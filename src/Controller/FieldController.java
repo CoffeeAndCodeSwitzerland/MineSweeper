@@ -3,7 +3,7 @@ package Controller;
 import Common.CellClickState;
 import Common.CellState;
 import Model.Database;
-import Model.Game;
+import Model.GameTime;
 import View.CellView;
 import View.FieldView;
 import View.GameOverUI;
@@ -17,7 +17,7 @@ import java.util.Date;
 
 /**
  * Class FieldController
- * Controls the interaction with the fields members (cells)
+ * Controls the interaction with the field's members (cells)
  */
 public class FieldController {
     //database to save time high score
@@ -26,15 +26,16 @@ public class FieldController {
     private FieldView view;
 
     //class to save playing time
-    private Game game;
+    private GameTime time;
 
     public FieldController(int fieldSize) {
         //connect to database
         db.connect();
         db.createTable();
 
-        game = new Game(new Date());
+        time = new GameTime(new Date());
 
+        //add the mouselistener to each cell so the FieldController can control everything
         view = new FieldView(fieldSize, new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -77,10 +78,19 @@ public class FieldController {
             }
         });
 
-        //set the neighbors of each bomb
         setNeighbors();
     }
 
+    /**
+     * method to set the bomb neighbors of each cell in a range of a 9-field
+     *
+     * 1 2 3
+     * 4 5 6
+     * 7 8 9
+     *
+     * e.g. set neighbors of cell 5
+     *
+     */
     private void setNeighbors() {
         CellView[][] field = view.getCellViews();
         int bombCounter = 0;
@@ -108,6 +118,10 @@ public class FieldController {
         //end field
     }
 
+    /**
+     * reveal cell state
+     * @param sourceCell
+     */
     private void reveal(CellView sourceCell) {
         if (sourceCell.getState() != CellState.BOMB) {
             sourceCell.reveal();
@@ -121,7 +135,9 @@ public class FieldController {
     }
 
     /**
-     * fills the neighbors with no bombs in their "9 field" recursively
+     * fills the neighbors with no bombs in their "9 field" recursively, if there
+     * is no bomb neighbor besides
+     *
      * @param xPos
      * @param yPos
      */
@@ -138,6 +154,11 @@ public class FieldController {
         }
     }
 
+    /**
+     * if any cell is marked as a bomb or clicked,
+     * the time is won
+     * @throws SQLException
+     */
     private void checkGameState() throws SQLException {
         double success = 0;
         CellView[][] field = view.getCellViews();
@@ -151,7 +172,7 @@ public class FieldController {
         }
         if (success == Math.pow(field.length, 2)) {
             this.view.setVisible(false);
-            new SuccessUI(this.game, this.db, this.view.getCellViews().length);
+            new SuccessUI(this.time, this.db, this.view.getCellViews().length);
         }
     }
 }

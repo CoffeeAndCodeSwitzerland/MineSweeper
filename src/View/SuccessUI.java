@@ -1,7 +1,7 @@
 package View;
 
 import Model.Database;
-import Model.Game;
+import Model.GameTime;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,17 +9,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
+/**
+ * gui that gets called if the time is won
+ */
 public class SuccessUI extends JFrame {
-    private Game game;
-    public SuccessUI(Game game, Database db, int fieldSize) throws SQLException {
-        this.game = game;
+    private GameTime time;
+    public SuccessUI(GameTime game, Database db, int fieldSize) throws SQLException {
+        this.time = game;
         game.setEndDate(new Date());
 
         setSize(500, 500);
         setLocationRelativeTo(null);
         setLayout(new GridLayout(5, 1));
 
-        JLabel label = new JLabel("Du hast das Spiel in " + ((this.game.getEndDate().getTime() - this.game.getStartDate().getTime()) / 1000) + " Sekunden gemeistert!!!");
+        JLabel label = new JLabel("Du hast das Spiel in " + ((this.time.getEndDate().getTime() - this.time.getStartDate().getTime()) / 1000) + " Sekunden gemeistert!!!");
         add(label);
 
         JLabel uname = new JLabel("Wie ist dein Name?: ");
@@ -31,7 +34,7 @@ public class SuccessUI extends JFrame {
         JButton submit = new JButton("Resultat Abspeichern");
         add(submit);
 
-
+        //some sql stuff
         JLabel bestScore = new JLabel();
         ResultSet rs = db.select("Select distinct username, winningtime from Minesweeper where fieldsize = "+ fieldSize +" order by winningtime asc limit 5;");
         try {
@@ -46,7 +49,7 @@ public class SuccessUI extends JFrame {
         try {
             submit.addActionListener(e -> {
                 if (!username.getText().equals("") && !username.getText().startsWith(" ")) {
-                    db.insert(username.getText(), String.valueOf((this.game.getEndDate().getTime() - this.game.getStartDate().getTime()) / 1000), fieldSize);
+                    db.insert(username.getText(), String.valueOf((this.time.getEndDate().getTime() - this.time.getStartDate().getTime()) / 1000), fieldSize);
                     JOptionPane.showMessageDialog(null, "Daten erfolgreich in Datenbank insertiert!");
                     try {
                         Thread.sleep(1000);

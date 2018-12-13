@@ -2,11 +2,14 @@ package Model;
 
 import java.util.Date;
 
-public class Game {
+/**
+ * set the start- and end date of the game
+ */
+public class GameTime {
     private Date startDate;
     private Date endDate;
 
-    public Game(Date startDate) {
+    public GameTime(Date startDate) {
         this.startDate = startDate;
     }
 

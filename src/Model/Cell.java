@@ -3,6 +3,10 @@ package Model;
 import Common.CellClickState;
 import Common.CellState;
 
+/**
+ * cell model with a position (col and row) a cell state and click state,
+ * the number of bomb neighbors and the protection (boolean true or false)
+ */
 public class Cell {
 
     private int col;

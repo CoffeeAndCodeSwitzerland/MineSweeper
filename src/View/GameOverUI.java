@@ -10,9 +10,9 @@ public class GameOverUI extends JFrame {
         setSize(300, 300);
         setResizable(false);
         setLocationRelativeTo(null);
-        setTitle("Game over ;(");
+        setTitle("GameTime over ;(");
 
-        JLabel gameOver = new JLabel("Game Over", SwingConstants.CENTER);
+        JLabel gameOver = new JLabel("GameTime Over", SwingConstants.CENTER);
         add(gameOver);
 
         add(new JLabel("Noch einmal spielen?", SwingConstants.CENTER));

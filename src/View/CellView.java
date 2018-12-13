@@ -8,6 +8,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseListener;
 
+/**
+ * cell view
+ */
 public class CellView extends JButton {
 
     private Cell cell;
@@ -25,6 +28,9 @@ public class CellView extends JButton {
         addMouseListener(listener);
     }
 
+    /**
+     * reveal the cell (set clickstate to clicked and set the bomb neighbors text
+     */
     public void reveal() {
         setBackground(Color.gray);
         if (this.getBombNeighbors() != 0) {
@@ -33,6 +39,9 @@ public class CellView extends JButton {
         this.setClickState(CellClickState.CLICKED);
     }
 
+    /**
+     * protect (mark) the cell if the player knows it's a bomb
+     */
     public void protect() {
         this.setProtected(!this.isProtected());
         if (this.isProtected()) {
