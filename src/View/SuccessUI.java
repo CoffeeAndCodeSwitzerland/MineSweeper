@@ -14,9 +14,9 @@ import java.util.Date;
  */
 public class SuccessUI extends JFrame {
     private GameTime time;
-    public SuccessUI(GameTime game, Database db, int fieldSize) throws SQLException {
-        this.time = game;
-        game.setEndDate(new Date());
+    public SuccessUI(GameTime time, Database db, int fieldSize) throws SQLException {
+        this.time = time;
+        this.time.setEndDate(new Date());
 
         setSize(500, 500);
         setLocationRelativeTo(null);
